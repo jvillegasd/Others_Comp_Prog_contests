@@ -56,7 +56,7 @@ void buildTree(int node, int l, int r){
 
 void updateTree(int node, int l, int r, int i){
     if(l == i && r == i){
-        tree[node] = 0;
+        tree[node]=0;
         return;
     }
     int mid=(l+r)/2;
