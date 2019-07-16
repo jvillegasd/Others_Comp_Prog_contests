@@ -29,7 +29,7 @@ int main(){
     int n, d[10010];
     double dp[10010], c[10010];
     scanf("%d", &n);
-    for(int i = 1; i <= n; i++) scanf("%d %lf", &d[i], &c[i]), dp[i]=1e15;
+    for(int i = 1; i <= n; i++) scanf("%d %lf", &d[i], &c[i]), dp[i]=INT_MAX;
     for(int i = 1; i <= n; i++){
         dp[i]=min(dp[i], dp[i-1]+c[i]);
         if(d[i] < 120) dp[i+1]=min(dp[i+1], dp[i-1]+c[i]+0.5*c[i+1]);
