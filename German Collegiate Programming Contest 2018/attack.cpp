@@ -77,13 +77,12 @@ int main(){
         scanf("%d %d", &yf, &xf);
         xf--;
         yf--;
-        u=convert(xf, yf);
-        v=convert(xi, yi);
-        int lca = LCA(min(u,v), max(u,v));
+        u=convert(xi, yi);
+        v=convert(xf, yf);
+        int lca = LCA(u, v);
         ans+=(dist[u]+dist[v]-2*(dist[lca]-1)-2);
         xi=xf;
         yi=yf;
-
     }
     cout << ans << endl;
     return 0;
