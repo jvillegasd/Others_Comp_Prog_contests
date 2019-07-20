@@ -40,26 +40,18 @@ bool onSegment(pt p, pt q, pt r) { //Ver si el punto Q cae en la linea PR
     return false;
 }
 
-/*
-    Diferencia de los distintos valores de la orientacion de un triple:
-    Cero = que el triple es colineal
-    Positivo = que el triple tiene orientacion contraria al reloj
-    Negativo = que el triple tiene orientacion a favor al reloj
-*/
-
 int orientation(pt p, pt q, pt r){
     int val = (q.y-p.y)*(r.x-q.x)-(q.x-p.x)*(r.y-q.y);
     if(val == 0) return 0;
     return (val > 0)? 1: 2;
 }
 
-bool has_intersection_point(pt p1, pt q1, pt p2, pt q2){ //Ver si dos lineas se intersectan
+bool has_intersection_point(pt p1, pt q1, pt p2, pt q2){
     int o1 = orientation(p1, q1, p2);
     int o2 = orientation(p1, q1, q2);
     int o3 = orientation(p2, q2, p1);
     int o4 = orientation(p2, q2, q1);
-    if(o1 != o2 && o3 != o4) return true; //Caso general
-    //Casos especiales
+    if(o1 != o2 && o3 != o4) return true;
     if(o1 == 0 && onSegment(p1, p2, q1)) return true;
     if(o2 == 0 && onSegment(p1, q2, q1)) return true;
     if(o3 == 0 && onSegment(p2, p1, q2)) return true;
@@ -67,7 +59,7 @@ bool has_intersection_point(pt p1, pt q1, pt p2, pt q2){ //Ver si dos lineas se 
     return false;
 }
 
-bool is_inside(pt test, vector<pt> poly){ //Ver si un punto está contenido dentro de un poligono convexo
+bool is_inside(pt test, vector<pt> poly){
     int i;
     int j;
     bool result = false;
@@ -81,15 +73,7 @@ bool is_inside(pt test, vector<pt> poly){ //Ver si un punto está contenido dentr
     return result;
 }
 
-/*
-    Implementacion para saber si dos poligonos convexos se intersectan entre si.
-    1) La primera parte consiste en verificar si alguna arista del poligono A está intersectando a otra del poligono B.
-    2) La segunda parte consiste en que si no se pudo encontrar que el poligono A se intersecta con el poligono B, entonces
-       se buscará si algún punto del poligino A está contenido dentro el poligono B y viceversa
-*/
-
 bool ch_interset(vector<pt> a, vector<pt> b){
-    //Primera parte
     for(int i = 0; i < a.size(); i++){
         int nexta=(i+1 == a.size())?0:i+1;
         pt l1p1=a[i], l1p2=a[nexta];
@@ -98,19 +82,10 @@ bool ch_interset(vector<pt> a, vector<pt> b){
             if(has_intersection_point(l1p1, l1p2, b[j], b[nextb])) return true;
         }
     }
-    //Segunda parte
     for(int i = 0; i < a.size(); i++) if(is_inside(a[i], b)) return true;
     for(int i = 0; i < b.size(); i++) if(is_inside(b[i], a)) return true;
     return false;
 }
-
-/*
-    Metodo de Graham para calcular el convex hull de un set de puntos
-    con complejidad O(nlogn).
-    Esta implementacion ordena los puntos por el eje X y no por angulos polares,
-    porque usa la orientacion con el producto vectorial de los 3 puntos.
-    Retorna el convex hull en sentido horario empezando por el upper convex hull.
-*/
 
 bool cmp(pt a, pt b) {
     return a.x < b.x || (a.x == b.x && a.y < b.y);
