@@ -33,7 +33,7 @@ struct pt {
     }
 };
 
-bool onSegment(pt p, pt q, pt r) { //Ver si el punto Q cae en la linea PR
+bool onSegment(pt p, pt q, pt r) {
     if (q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x) &&
         q.y <= max(p.y, r.y) && q.y >= min(p.y, r.y))
        return true;
