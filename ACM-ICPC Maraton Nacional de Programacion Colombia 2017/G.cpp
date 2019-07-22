@@ -33,7 +33,7 @@ void DFS(int u, vector<pii> g[]){
         k[u]+=k[e.fp];
     }
     dp[u][label[u]]=0;
-    for(auto e : g[u]){
+    for(auto e : g[u]){ //Caminos incompletos (Apenas los creamos)
         for(int i = k[u]; i >= label[u]; i--){
             if(dp[u][i] == -1) continue;
             for(int j = k[e.fp]; j >= 1; j--){
@@ -43,7 +43,7 @@ void DFS(int u, vector<pii> g[]){
         }
     }
     dp2[u][0]=0;
-    for(auto e : g[u]){
+    for(auto e : g[u]){ //Caminos completos (Con los caminos ya creados con dp, unirlos aqui)
         for(int i = k[u]; i >= 0; i--){
             if(dp2[u][i] == -1) continue;
             for(int j = k[e.fp]; j >= 1; j--){
